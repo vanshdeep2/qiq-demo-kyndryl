@@ -203,13 +203,86 @@ function LtvSettingsModal({ open, onClose, draft, onChange, onRecalculate, onRes
   )
 }
 
+/**
+ * Category-level detail, shown when a driver has no level-2 breakdown.
+ * story-spec only decomposes some drivers, and the generator leaves the
+ * `subDrivers` array off rather than inventing one — so most rows land here.
+ * Every driver row opens something; none is a dead click.
+ */
+function DriverSummary({ row }) {
+  const sig = driverSignal(row)
+  const stats = [
+    { label: 'Weekly volume', value: fmtNum(row.volume) },
+    { label: 'Share of contacts', value: `${row.share}%` },
+    { label: 'First contact resolution', value: `${row.fcr}%`, cls: fcrClass(row.fcr) },
+    { label: 'Average handle time', value: formatAht(row.aht), cls: row.aht > 480 ? 'aht-bad' : 'aht-ok' },
+    { label: 'Escalation rate', value: `${row.esc}%` },
+  ]
+
+  return (
+    <>
+      <div className="drawer-kpi-header">
+        <div>
+          <div className="insight-modal-section-label" style={{ marginTop: 0 }}>
+            Weekly volume
+          </div>
+          <div className="drawer-kpi-val">{fmtNum(row.volume)}</div>
+          <div className="drawer-kpi-sub">{row.share}% of all weekly contacts</div>
+        </div>
+        <div className={`signal-badge ${sig.cls}`}>{sig.label}</div>
+      </div>
+
+      <div className="insight-modal-section-label">Category performance</div>
+      <div className="table-wrap">
+        <table className="insight-modal-drivers-table">
+          <thead>
+            <tr>
+              <th>Measure</th>
+              <th>This category</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stats.map((stat) => (
+              <tr key={stat.label}>
+                <td className="insight-modal-drivers-name">{stat.label}</td>
+                <td className={stat.cls}>{stat.value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p className="insight-modal-text">
+        No level-2 breakdown is published for this category — the story spec decomposes
+        only the drivers where a sub-driver split is evidenced, rather than inventing
+        one. Contact-level detail for this category is available in Contact Search.
+      </p>
+    </>
+  )
+}
+
 function DriverDrillModal({ row, onClose }) {
   // subDrivers is optional: story-spec only breaks some drivers down to a
   // second level, and the generator leaves the array off rather than
-  // inventing one. Reading it unconditionally crashed the modal on every
-  // driver row that has no level-2 detail.
+  // inventing one. Reading it unconditionally used to crash the modal on
+  // every driver row without level-2 detail; those rows now render
+  // DriverSummary instead, so every row opens something.
   const subDrivers = row?.subDrivers ?? []
-  if (!row || subDrivers.length === 0) return null
+  if (!row) return null
+
+  if (subDrivers.length === 0) {
+    return (
+      <InsightModal
+        open
+        onClose={onClose}
+        title={row.name}
+        subtitle="Category detail · volume, share and performance"
+      >
+        <DriverSummary row={row} />
+      </InsightModal>
+    )
+  }
+
   const maxSub = Math.max(...subDrivers.map((d) => d.volume))
 
   return (
@@ -763,9 +836,13 @@ export default function Executive() {
                   return (
                     <tr
                       key={row.name}
-                      className={hasSub ? 'drivers-row-clickable' : undefined}
-                      onClick={hasSub ? () => setDriverDrill(row) : undefined}
-                      title={hasSub ? 'View level 2 driver breakdown' : undefined}
+                      className="drivers-row-clickable"
+                      onClick={() => setDriverDrill(row)}
+                      title={
+                        hasSub
+                          ? 'View level 2 driver breakdown'
+                          : 'View category detail'
+                      }
                     >
                       <td className="subcat-name">{row.name}</td>
                       <td>
