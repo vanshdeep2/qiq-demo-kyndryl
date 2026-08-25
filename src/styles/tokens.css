@@ -1,0 +1,56 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Palette from clients/kyndryl/story-spec.json -> designSystem / brand.palette. */
+:root {
+  --dark: #141414;
+  --dark2: #2e2e2e;
+  --red: #FF462D;
+  --green: #1A7A4A;
+  --bg: #F7F6F4;
+  --white: #ffffff;
+  --border: #E4E2DE;
+  --card-border: 0.5px solid #E4E2DE;
+  --text: #141414;
+  --muted: #6b6b6b;
+  --light: #9b9b9b;
+  --amber: #D97706;
+  --blue: #2A4FA8;
+}
+
+body {
+  font-family: 'Inter', 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.page > * { animation: fadeUp 0.3s ease both; }
+
+.val-red { color: var(--red); }
+.val-green { color: var(--green); }
+.val-amber { color: var(--amber); }
+.chg-red { color: var(--red); }
+.chg-green { color: var(--green); }
+.chg-amber { color: var(--amber); }
+
+.tag { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 3px; }
+.tag-red { background: #fef2f2; color: var(--red); border: 0.5px solid #fecaca; }
+.tag-green { background: #f0fdf4; color: var(--green); border: 0.5px solid #bbf7d0; }
+.tag-amber { background: #fffbeb; color: var(--amber); border: 0.5px solid #fde68a; }
+.tag-muted { background: var(--bg); color: var(--muted); border: 0.5px solid var(--border); }
+
+.alert-box { padding: 12px 14px; border-radius: 8px; font-size: 12px; line-height: 1.55; }
+.alert-red { background: #fef2f2; border: 0.5px solid #fecaca; color: var(--dark); }
+.alert-amber { background: #fffbeb; border: 0.5px solid #fde68a; color: var(--dark); }
+.alert-green { background: #f0fdf4; border: 0.5px solid #bbf7d0; color: var(--dark); }
