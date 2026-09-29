@@ -68,7 +68,7 @@ export const SORTABLE_FIELDS = [
 ]
 
 /**
- * Critical-failure quick links on Contact Search. Every id, agent name, and
+ * Critical-failure quick links on Contact Evidence. Every id, agent name, and
  * category below was checked against the generated contact index - each one
  * resolves to a real contact whose agent and category match its label.
  */

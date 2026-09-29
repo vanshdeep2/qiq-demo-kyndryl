@@ -197,7 +197,7 @@ export default function ContactSearch() {
       <Nav currentPage="search" liveLabel={LIVE_LABEL} callsPill={CALLS_PILL} />
       <div className="page">
         <div className="briefing-kicker">QiQ Contact Intelligence</div>
-        <h1 className="briefing-title">Contact Search</h1>
+        <h1 className="briefing-title">Contact Evidence</h1>
         <div className="briefing-subtitle">
           QA analysts and team leaders · 41,500 contacts analysed · 2,077-record working extract · Search by
           contact ID, member, or category

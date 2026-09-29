@@ -13,7 +13,7 @@
 export const LIVE_LABEL = 'Live · 5-week window'
 export const CALLS_PILL = '47,000 contacts analysed'
 export const EXTRACT_NOTE =
-  'Contact Search carries a 2,358-record working extract of the 47,000-contact population.'
+  'Contact Evidence carries a 2,358-record working extract of the 47,000-contact population.'
 
 export const PERIOD_LABEL = '27 Apr - 31 May 2026'
 export const WK_LABELS = ['27 Apr-3 May', '4-10 May', '11-17 May', '18-24 May', '25-31 May']
@@ -383,7 +383,7 @@ export const KPI_TILE_META = {
   aht: { label: 'AHT', changeText: 'Voice + messaging blended', colour: 'green' },
   // Labelled "first contact" deliberately: this is the share of contacts
   // resolved on the FIRST attempt with no repeat. It is a different measure
-  // from Quality Overview's "Call Resolution Rate", which is the share of
+  // from Quality Diagnostics' "Call Resolution Rate", which is the share of
   // contacts resolved eventually. Both are correct and they do not agree by
   // design - see qualityConstants.METRIC_CARD_NOTES.
   fcr: {
