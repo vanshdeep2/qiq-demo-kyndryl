@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BRAND } from '../config/brand'
 import { PAGES, MENU_ORDER } from '../config/pages'
+import UserMenu from './UserMenu'
 import '../styles/components.css'
 
 const MENU_ITEMS = MENU_ORDER.map((page) => ({ page, ...PAGES[page] }))
@@ -69,6 +70,7 @@ export default function Nav({ currentPage, liveLabel, callsPill, pageTitle, navE
         </span>
         <span className="nav-pill">{callsPill}</span>
         {navExtra}
+        <UserMenu />
       </div>
     </nav>
   )
